@@ -37,6 +37,7 @@ void choiceSort(SqList *L){
 }
 */
 
+/*
 //直接插入排序
 void insertSort(SqList *L){
 	int i, j;
@@ -50,6 +51,22 @@ void insertSort(SqList *L){
 		L->r[j+1] = L->r[0];
 	}
 }
+*/
+
+//冒泡排序
+void bubbleSort(SqList *L){
+	int i, j;
+	bool flag = true;
+	for(i = 1; i <= L->length && flag; i++){
+		flag = false;
+		for(j = L->length; j >= i; j--){
+			if(L->r[j] < L->r[j-1]){
+				swap(L->r[j], L->r[j-1]);
+				flag = true;
+			}
+		}
+	}
+}
 
 int main(){
 	int a[9] = {9, 1, 5, 3, 2, 7, 4, 8, 6};
@@ -60,8 +77,10 @@ int main(){
 	print_arr(L);
 
 	//排序
+	//3.冒泡排序
+	bubbleSort(L);
 	//2.直接插入排序
-	insertSort(L);
+//	insertSort(L);
 	//1.简单选择排序
 //	choiceSort(L);
 
