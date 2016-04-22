@@ -18,6 +18,8 @@ void print_arr(SqList *L){
 	cout<<endl;
 }
 
+//简单选择排序
+/*
 void choiceSort(SqList *L){
 	int min_index;
 	int i, j;
@@ -33,6 +35,21 @@ void choiceSort(SqList *L){
 		L->r[i] = L->r[0];
 	}
 }
+*/
+
+//直接插入排序
+void insertSort(SqList *L){
+	int i, j;
+	for(i = 2; i <= L->length; i++){
+		L->r[0] = L->r[i];
+		j = i - 1;
+		while(L->r[0] < L->r[j] && j > 0){
+			L->r[j+1] = L->r[j];
+			j--;
+		}
+		L->r[j+1] = L->r[0];
+	}
+}
 
 int main(){
 	int a[9] = {9, 1, 5, 3, 2, 7, 4, 8, 6};
@@ -43,8 +60,11 @@ int main(){
 	print_arr(L);
 
 	//排序
+	//2.直接插入排序
+	insertSort(L);
 	//1.简单选择排序
-	choiceSort(L);
+//	choiceSort(L);
+
 
 	//排序后
 	print_arr(L);
