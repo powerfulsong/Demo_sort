@@ -53,6 +53,7 @@ void insertSort(SqList *L){
 }
 */
 
+/*
 //冒泡排序
 void bubbleSort(SqList *L){
 	int i, j;
@@ -67,6 +68,25 @@ void bubbleSort(SqList *L){
 		}
 	}
 }
+*/
+
+//希尔排序
+void shellSort(SqList *L){
+	int size = L->length;
+	while(size > 1){
+		size = size/3 + 1;
+		for(int i = size + 1; i <= L->length; i++){
+			if(L->r[i] < L->r[i-size]){
+				L->r[0] = L->r[i];
+				int j;
+				for(j = i - size; j > 0 && L->r[0] < L->r[j]; j-=size){
+					L->r[j+size] = L->r[j];
+				}
+				L->r[j+size] = L->r[0];
+			}
+		}
+	}
+}
 
 int main(){
 	int a[9] = {9, 1, 5, 3, 2, 7, 4, 8, 6};
@@ -77,8 +97,10 @@ int main(){
 	print_arr(L);
 
 	//排序
+	//4.希尔排序
+	shellSort(L);
 	//3.冒泡排序
-	bubbleSort(L);
+//	bubbleSort(L);
 	//2.直接插入排序
 //	insertSort(L);
 	//1.简单选择排序
