@@ -90,6 +90,7 @@ void shellSort(SqList *L){
 }
 */
 
+/*
 //归并排序
 void merge(int a[], int b[], int p, int t, int q){ //将ａ[p,.t..q],归并到b[p,.t..,q]中
 	int i = p, j = t + 1;
@@ -127,7 +128,35 @@ void mSort(int a[], int b[], int m, int n){ //将a[m,...,n]归并到b[m,...n]中
 void mergeSort(SqList *L){
 	mSort(L->r, L->r, 1, L->length);
 }
+*/
 
+//堆排序
+void HeapAdjust(SqList *L, int m, int n){
+	int temp = L->r[m];
+	for(int j = 2*m; j <= n; j++){
+		if(j < n && L->r[j] < L->r[j+1]){ //比较两个子节点
+			++j; //ｊ为关键字大的下标
+		}
+
+		if(temp > L->r[j])
+			break;
+		L->r[m] = L->r[j];
+		m = j;
+	}
+	L->r[m] = temp;
+}
+
+void heapSort(SqList *L){
+	int i;
+	for(i = L->length/2; i > 0; i--){ //构建大顶堆
+		HeapAdjust(L, i, L->length);
+	}	
+	
+	for(i = L->length; i > 1; i--){
+		swap(L->r[1], L->r[i]); //交换栈顶元素
+		HeapAdjust(L, 1, i-1);
+	}
+}
 
 int main(){
 	int a[9] = {9, 1, 5, 3, 2, 7, 4, 8, 6};
@@ -138,8 +167,10 @@ int main(){
 	print_arr(L);
 
 	//排序
+	//6.堆排序
+	heapSort(L);
 	//5.归并排序
-	mergeSort(L);
+//	mergeSort(L);
 	//4.希尔排序
 //	shellSort(L);
 	//3.冒泡排序
