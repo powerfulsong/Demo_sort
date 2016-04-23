@@ -70,6 +70,7 @@ void bubbleSort(SqList *L){
 }
 */
 
+/*
 //希尔排序
 void shellSort(SqList *L){
 	int size = L->length;
@@ -87,6 +88,46 @@ void shellSort(SqList *L){
 		}
 	}
 }
+*/
+
+//归并排序
+void merge(int a[], int b[], int p, int t, int q){ //将ａ[p,.t..q],归并到b[p,.t..,q]中
+	int i = p, j = t + 1;
+	int count = i;
+	while(i <= t && j <= q){
+		if(a[i] <= a[j]){
+			b[count++] = a[i++];
+		}
+		else{
+			b[count++] = a[j++];
+		}
+	}
+	
+	while(i <= t){
+		b[count++] = a[i++];
+	}
+
+	while(j <= q){
+		b[count++] = a[j++];
+	}
+}
+
+void mSort(int a[], int b[], int m, int n){ //将a[m,...,n]归并到b[m,...n]中
+	int c[MAXSIZE];
+	if(m == n)
+		b[m] = a[m];
+	else{
+		int index = (m + n)/2;
+		mSort(a, c, m, index);
+		mSort(a, c, index+1, n);
+		merge(c, b, m, index, n); 
+	}
+}
+
+void mergeSort(SqList *L){
+	mSort(L->r, L->r, 1, L->length);
+}
+
 
 int main(){
 	int a[9] = {9, 1, 5, 3, 2, 7, 4, 8, 6};
@@ -97,8 +138,10 @@ int main(){
 	print_arr(L);
 
 	//排序
+	//5.归并排序
+	mergeSort(L);
 	//4.希尔排序
-	shellSort(L);
+//	shellSort(L);
 	//3.冒泡排序
 //	bubbleSort(L);
 	//2.直接插入排序
