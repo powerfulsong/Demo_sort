@@ -130,6 +130,7 @@ void mergeSort(SqList *L){
 }
 */
 
+/*
 //堆排序
 void HeapAdjust(SqList *L, int m, int n){
 	int temp = L->r[m];
@@ -157,6 +158,38 @@ void heapSort(SqList *L){
 		HeapAdjust(L, 1, i-1);
 	}
 }
+*/
+
+//快速排序
+int  findSeprator(SqList *L, int low, int high){
+	L->r[0] = L->r[high];  //将最后一个元素放到ｒ[0]中
+	int i = low, j = high;
+	while(i < j){
+		while(i < j && L->r[i] < L->r[0]){ //当元素小于r[0],i++
+			i++;
+		}
+		L->r[j] = L->r[i]; //当元素大于r[0]，交换元素
+		while(i < j && L->r[j] > L->r[0]){ //当元素大于r[0], j--
+			j--;
+		}
+		L->r[i] = L->r[j]; //当元素小于r[0]，交换元素
+	}
+	L->r[i] = L->r[0]; //把r[0]元素放到最终位置
+	return i;
+}
+
+void qSort(SqList *L, int low, int high){
+	int index;
+	if(low < high){
+		index = findSeprator(L, low, high);
+		qSort(L, low, index-1);
+		qSort(L, index+1, high);
+	}
+}
+
+void quickSort(SqList *L){
+	qSort(L, 1, L->length);	
+}
 
 int main(){
 	int a[9] = {9, 1, 5, 3, 2, 7, 4, 8, 6};
@@ -167,8 +200,10 @@ int main(){
 	print_arr(L);
 
 	//排序
+	//7.快速排序
+	quickSort(L);
 	//6.堆排序
-	heapSort(L);
+//	heapSort(L);
 	//5.归并排序
 //	mergeSort(L);
 	//4.希尔排序
